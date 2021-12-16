@@ -11,30 +11,36 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final int REQUEST_CODE_MENU = 101;
-        EditText userid;
-        EditText userpass;
+    EditText userid;
+    EditText userpass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Button loginBtn = findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String username = userid.getText().toString();
-                String password = userpass.getText().toString();
-
-                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                intent.putExtra("ria", username);
-                intent.putExtra("1234", password);
-
-                startActivityForResult(intent, REQUEST_CODE_MENU);
+        Button button = findViewById(R.id.loginBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginProcess(view);
             }
         });
-
         userid = findViewById(R.id.userid);
         userpass = findViewById(R.id.userpass);
+    }
+
+    public void loginProcess(View v)
+    {
+        String uid = userid.getText().toString();
+        String upass = userpass.getText().toString();
+        if(uid.equals("ria") && upass.equals("2021")){
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "로그인 정보가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+            userid.setText("");
+            userpass.setText("");
+        }
     }
 }
